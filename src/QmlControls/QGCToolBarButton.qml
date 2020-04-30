@@ -25,6 +25,7 @@ Button {
     checkable:          false
 
     property bool logo: false
+    property bool original: false
 
     property real _horizontalMargin: ScreenTools.defaultFontPixelWidth
 
@@ -32,7 +33,7 @@ Button {
 
     background: Rectangle {
         anchors.fill: parent
-        color:  logo ? qgcPal.brandingPurple : (button.checked ? qgcPal.buttonHighlight : Qt.rgba(0,0,0,0))
+        color:  (original || !logo) ? (button.checked ? qgcPal.buttonHighlight : Qt.rgba(0,0,0,0)) : qgcPal.brandingPurple
     }
 
     contentItem: Row {
@@ -44,7 +45,7 @@ Button {
             width:                  height
             sourceSize.height:      parent.height
             fillMode:               Image.PreserveAspectFit
-            color:                  logo ? "white" : (button.checked ? qgcPal.buttonHighlightText : qgcPal.buttonText)
+            color:                  original ? "transparent" : (logo ? "white" : (button.checked ? qgcPal.buttonHighlightText : qgcPal.buttonText))
             source:                 button.icon.source
             anchors.verticalCenter: parent.verticalCenter
         }

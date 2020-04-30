@@ -42,6 +42,7 @@
         <file alias="Stop">resources/Stop.svg</file>
         <file alias="takeoff.svg">resources/takeoff.svg</file>
         <file alias="TrashDelete.svg">resources/TrashDelete.svg</file>
+        <file alias="VyoriusLogo">resources/VyoriusLogo.svg</file>
         <file alias="waves.svg">resources/waves.svg</file>
         <file alias="wind-guru.svg">resources/wind-guru.svg</file>
         <file alias="wind-rose.svg">resources/wind-rose.svg</file>

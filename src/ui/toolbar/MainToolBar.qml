@@ -83,8 +83,9 @@ Item {
                 QGCToolBarButton {
                     id:                 settingsButton
                     Layout.fillHeight:  true
-                    icon.source:        "/res/QGCLogoWhite"
+                    icon.source:        "/res/VyoriusLogo"
                     logo:               true
+                    original:           true
                     visible:            !QGroundControl.corePlugin.options.combineSettingsAndSetup
                     onClicked: {
                         if (mainWindow.preventViewSwitch()) {
