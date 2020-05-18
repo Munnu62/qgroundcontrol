@@ -1,5 +1,7 @@
 Module QGroundControl.Controls
 
+CustomToolBarButton     1.0 CustomToolBarButton.qml
+CustomComboBox          1.0 CustomComboBox.qml
 AnalyzePage             1.0 AnalyzePage.qml
 AppMessages             1.0 AppMessages.qml
 AxisMonitor             1.0 AxisMonitor.qml

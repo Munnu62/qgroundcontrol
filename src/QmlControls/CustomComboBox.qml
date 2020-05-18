@@ -85,12 +85,12 @@ T.ComboBox {
         contentItem: Text {
             text:                   _text
             font:                   control.font
-            color:                  "#1b1a1d"//control.currentIndex === index ? _qgcPal.buttonHighlightText : _qgcPal.buttonText
+            color:                  control.currentIndex === index ? _qgcPal.buttonHighlightText : _qgcPal.buttonText
             verticalAlignment:      Text.AlignVCenter
         }
 
         background: Rectangle {
-            color:                  control.currentIndex === index ? "white" : "#dbdbd9"//_qgcPal.buttonHighlight : _qgcPal.button
+            color:                  control.currentIndex === index ? _qgcPal.buttonHighlight : _qgcPal.button
         }
 
         highlighted:                control.highlightedIndex === index
@@ -103,7 +103,7 @@ T.ComboBox {
         height:                 ScreenTools.defaultFontPixelWidth
         width:                  height
         source:                 "/qmlimages/arrow-down.png"
-        color:                  "black"//_qgcPal.text
+        color:                  _qgcPal.text
     }
 
     // The label of the button
@@ -117,16 +117,15 @@ T.ComboBox {
             anchors.horizontalCenter:   centeredLabel ? parent.horizontalCenter : undefined
             text:                       control.alternateText === "" ? control.currentText : control.alternateText
             font:                       control.font
-            color:                      "#1b1a1d"//_qgcPal.text
+            color:                      _qgcPal.text
         }
     }
 
     background: Rectangle {
         implicitWidth:  ScreenTools.implicitComboBoxWidth
         implicitHeight: ScreenTools.implicitComboBoxHeight
-        color:          "#f9f9fa"//_qgcPal.window
-        border.color:   "grey"//_qgcPal.text
-        radius:         10
+        color:          _qgcPal.window
+        border.color:   _qgcPal.text
     }
 
     popup: T.Popup {

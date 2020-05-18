@@ -19,7 +19,7 @@ Button {
     text:               "Button"  ///< Pass in your own button text
     activeFocusOnPress: true
 
-    implicitHeight: ScreenTools.isTinyScreen ? ScreenTools.defaultFontPixelHeight * 3.5 : ScreenTools.defaultFontPixelHeight * 2.5
+    implicitHeight: ScreenTools.isTinyScreen ? ScreenTools.defaultFontPixelHeight * 2 : ScreenTools.defaultFontPixelHeight * 1.5
     implicitWidth:  __panel.implicitWidth
 
     onCheckedChanged: checkable = false
@@ -37,6 +37,8 @@ Button {
         background: Rectangle {
             id:     innerRect
             color:  showHighlight ? qgcPal.buttonHighlight : qgcPal.windowShade
+            radius: 5
+
 
             implicitWidth: titleBar.x + titleBar.contentWidth + ScreenTools.defaultFontPixelWidth
 
@@ -45,11 +47,11 @@ Button {
                 anchors.leftMargin:     ScreenTools.defaultFontPixelWidth
                 anchors.left:           parent.left
                 anchors.verticalCenter: parent.verticalCenter
-                width:                  ScreenTools.defaultFontPixelHeight * 2
-                height:                 ScreenTools.defaultFontPixelHeight * 2
+                width:                  ScreenTools.defaultFontPixelHeight
+                height:                 ScreenTools.defaultFontPixelHeight
                 fillMode:               Image.PreserveAspectFit
                 mipmap:                 true
-                color:                  control.setupComplete ? qgcPal.button : "red"
+                color:                  control.setupComplete ? (showHighlight ? qgcPal.windowShade : qgcPal.buttonText) : "red"
                 source:                 control.imageResource
                 sourceSize:             _rootButton.sourceSize
             }
@@ -60,7 +62,7 @@ Button {
                 anchors.left:           image.right
                 anchors.verticalCenter: parent.verticalCenter
                 verticalAlignment:      TextEdit.AlignVCenter
-                color:                  showHighlight ? qgcPal.buttonHighlightText : qgcPal.buttonText
+                color:                  showHighlight ? qgcPal.windowShade : qgcPal.buttonText
                 text:                   control.text
             }
         }

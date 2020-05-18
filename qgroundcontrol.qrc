@@ -28,6 +28,7 @@
         <file alias="SubChecklist.qml">src/FlightDisplay/SubChecklist.qml</file>
     </qresource>
     <qresource prefix="/qml">
+    	<file alias="QGroundControl/Controls/CustomToolBarButton.qml">src/QmlControls/CustomToolBarButton.qml</file>
         <file alias="QGroundControl/Controls/HeightIndicator.qml">src/QmlControls/HeightIndicator.qml</file>
         <file alias="QGroundControl/Controls/QGCDynamicObjectManager.qml">src/QmlControls/QGCDynamicObjectManager.qml</file>
         <file alias="QGroundControl/Controls/QGCOptionsComboBox.qml">src/QmlControls/QGCOptionsComboBox.qml</file>
@@ -129,6 +130,7 @@
         <file alias="QGroundControl/Controls/QGCColoredImage.qml">src/QmlControls/QGCColoredImage.qml</file>
         <file alias="QGroundControl/Controls/QGCControlDebug.qml">src/QmlControls/QGCControlDebug.qml</file>
         <file alias="QGroundControl/Controls/QGCComboBox.qml">src/QmlControls/QGCComboBox.qml</file>
+        <file alias="QGroundControl/Controls/CustomComboBox.qml">src/QmlControls/CustomComboBox.qml</file>
         <file alias="QGroundControl/Controls/QGCFileDialog.qml">src/QmlControls/QGCFileDialog.qml</file>
         <file alias="QGroundControl/Controls/QGCFlickable.qml">src/QmlControls/QGCFlickable.qml</file>
         <file alias="QGroundControl/Controls/QGCFlickableHorizontalIndicator.qml">src/QmlControls/QGCFlickableHorizontalIndicator.qml</file>
@@ -186,6 +188,7 @@
         <file alias="QGroundControl/FactControls/FactBitmask.qml">src/FactSystem/FactControls/FactBitmask.qml</file>
         <file alias="QGroundControl/FactControls/FactCheckBox.qml">src/FactSystem/FactControls/FactCheckBox.qml</file>
         <file alias="QGroundControl/FactControls/FactComboBox.qml">src/FactSystem/FactControls/FactComboBox.qml</file>
+        <file alias="QGroundControl/FactControls/CustomFactComboBox.qml">src/FactSystem/FactControls/CustomFactComboBox.qml</file>
         <file alias="QGroundControl/FactControls/FactLabel.qml">src/FactSystem/FactControls/FactLabel.qml</file>
         <file alias="QGroundControl/FactControls/FactTextField.qml">src/FactSystem/FactControls/FactTextField.qml</file>
         <file alias="QGroundControl/FactControls/FactTextFieldGrid.qml">src/FactSystem/FactControls/FactTextFieldGrid.qml</file>

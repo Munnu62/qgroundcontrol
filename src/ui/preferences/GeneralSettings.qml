@@ -13,6 +13,7 @@ import QtQuick.Controls         1.2
 import QtQuick.Controls.Styles  1.4
 import QtQuick.Dialogs          1.2
 import QtQuick.Layouts          1.2
+import QtGraphicalEffects       1.14
 
 import QGroundControl                       1.0
 import QGroundControl.FactSystem            1.0
@@ -26,7 +27,7 @@ import QGroundControl.SettingsManager       1.0
 
 Rectangle {
     id:                 _root
-    color:              qgcPal.window
+    color:             qgcPal.window
     anchors.fill:       parent
     anchors.margins:    ScreenTools.defaultFontPixelWidth
 
@@ -63,6 +64,7 @@ Rectangle {
             anchors.fill:       parent
             contentHeight:      outerItem.height
             contentWidth:       outerItem.width
+            anchors.topMargin:  ScreenTools.defaultFontPixelWidth * 2
 
             Item {
                 id:     outerItem
@@ -77,26 +79,31 @@ Rectangle {
                         id:         unitsSectionLabel
                         text:       qsTr("Units")
                         visible:    QGroundControl.settingsManager.unitsSettings.visible
+                        color:      "#1b1a1d"
+                        font.bold:  true
                     }
                     Rectangle {
+                        id:                     _unitsCard
                         Layout.preferredHeight: unitsGrid.height + (_margins * 2)
                         Layout.preferredWidth:  unitsGrid.width + (_margins * 2)
                         color:                  qgcPal.windowShade
                         visible:                miscSectionLabel.visible
                         Layout.fillWidth:       true
+                        radius:                 10
 
                         GridLayout {
                             id:                         unitsGrid
                             anchors.topMargin:          _margins
                             anchors.top:                parent.top
-                            Layout.fillWidth:           false
+                            Layout.fillWidth:           true
                             anchors.horizontalCenter:   parent.horizontalCenter
                             flow:                       GridLayout.TopToBottom
+                            columnSpacing:              60
                             rows:                       4
 
                             Repeater {
                                 model: [ qsTr("Distance"), qsTr("Area"), qsTr("Speed"), qsTr("Temperature") ]
-                                QGCLabel { text: modelData }
+                                QGCLabel { text: modelData; color: "#1b1a1d" }
                             }
                             Repeater {
                                 model:  [ QGroundControl.settingsManager.unitsSettings.horizontalDistanceUnits, QGroundControl.settingsManager.unitsSettings.areaUnits, QGroundControl.settingsManager.unitsSettings.speedUnits, QGroundControl.settingsManager.unitsSettings.temperatureUnits ]
@@ -107,7 +114,18 @@ Rectangle {
                                 }
                             }
                         }
+  
+                        layer.enabled:     true
+                        layer.effect: DropShadow {
+                            source: _unitsCard
+                            color: "#d6d4d4"
+                            transparentBorder: true
+                            spread:  0.3
+                            samples: 15
+                        }
+
                     }
+
 
                     Item { width: 1; height: _margins }
 
@@ -115,13 +133,17 @@ Rectangle {
                         id:         miscSectionLabel
                         text:       qsTr("Miscellaneous")
                         visible:    QGroundControl.settingsManager.appSettings.visible
+                        color:      "#1b1a1d"
+                        font.bold:  true
                     }
                     Rectangle {
+                        id:                     _miscCard
                         Layout.preferredWidth:  Math.max(comboGrid.width, miscCol.width) + (_margins * 2)
                         Layout.preferredHeight: (pathRow.visible ? pathRow.y + pathRow.height : miscColItem.y + miscColItem.height)  + (_margins * 2)
                         Layout.fillWidth:       true
-                        color:                  qgcPal.windowShade
+                        color:                  "white"//qgcPal.windowShade
                         visible:                miscSectionLabel.visible
+                        radius:                 10
 
                         Item {
                             id:                 comboGridItem
@@ -379,17 +401,30 @@ Rectangle {
                                 }
                             }
                         }
+
+                        layer.enabled:     true
+                        layer.effect: DropShadow {
+                            source: _miscCard
+                            color: "#d6d4d4"
+                            transparentBorder: true
+                            spread:  0.3
+                            samples: 15
+                        }
                     }
 
                     Item { width: 1; height: _margins }
                     QGCLabel {
                         id:         loggingSectionLabel
                         text:       qsTr("Data Persistence")
+                        color:      "#1b1a1d"
+                        font.bold:  true
                     }
                     Rectangle {
+                        id:                     _dataCard
                         Layout.preferredHeight: dataPersistCol.height + (_margins * 2)
                         Layout.preferredWidth:  dataPersistCol.width + (_margins * 2)
-                        color:                  qgcPal.windowShade
+                        color:                  "white"//qgcPal.windowShade
+                        radius:                 10
                         Layout.fillWidth:       true
                         ColumnLayout {
                             id:                         dataPersistCol
@@ -411,18 +446,30 @@ Rectangle {
                                 Layout.maximumWidth:  logIfNotArmed.visible ? logIfNotArmed.width : disableDataPersistence.width * 1.5
                             }
                         }
+
+                        layer.enabled:     true
+                        layer.effect: DropShadow {
+                            source: _dataCard
+                            color: "#d6d4d4"
+                            transparentBorder: true
+                            spread:  0.3
+                            samples: 15
+                        }
                     }
 
                     Item { width: 1; height: _margins }
                     QGCLabel {
                         text:       qsTr("Telemetry Logs from Vehicle")
                         visible:    telemetryRect.visible
+                        color:      "#1b1a1d"
+                        font.bold:  true
                     }
                     Rectangle {
                         id:                     telemetryRect
                         Layout.preferredHeight: loggingCol.height + (_margins * 2)
                         Layout.preferredWidth:  loggingCol.width + (_margins * 2)
-                        color:                  qgcPal.windowShade
+                        color:                  "white"//qgcPal.windowShade
+                        radius:                 10
                         Layout.fillWidth:       true
                         visible:                promptSaveLog._telemetrySave.visible || logIfNotArmed._telemetrySaveNotArmed.visible || promptSaveCsv._saveCsvTelemetry.visible
                         ColumnLayout {
@@ -456,6 +503,15 @@ Rectangle {
                                 property Fact _saveCsvTelemetry: QGroundControl.settingsManager.appSettings.saveCsvTelemetry
                             }
                         }
+
+                        layer.enabled:     true
+                        layer.effect: DropShadow {
+                            source: telemetryRect
+                            color: "#d6d4d4"
+                            transparentBorder: true
+                            spread:  0.3
+                            samples: 15
+                        }
                     }
 
                     Item { width: 1; height: _margins }
@@ -463,11 +519,15 @@ Rectangle {
                         id:         flyViewSectionLabel
                         text:       qsTr("Fly View")
                         visible:    QGroundControl.settingsManager.flyViewSettings.visible
+                        color:      "#1b1a1d"
+                        font.bold:  true
                     }
                     Rectangle {
+                        id:                     _flyCard
                         Layout.preferredHeight: flyViewCol.height + (_margins * 2)
                         Layout.preferredWidth:  flyViewCol.width + (_margins * 2)
-                        color:                  qgcPal.windowShade
+                        color:                  "white"//qgcPal.windowShade
+                        radius:                 10
                         visible:                flyViewSectionLabel.visible
                         Layout.fillWidth:       true
 
@@ -589,6 +649,15 @@ Rectangle {
                                 }
                             }
                         }
+
+                        layer.enabled:     true
+                        layer.effect: DropShadow {
+                            source: _flyCard
+                            color: "#d6d4d4"
+                            transparentBorder: true
+                            spread:  0.3
+                            samples: 15
+                        }
                     }
 
                     Item { width: 1; height: _margins }
@@ -597,11 +666,15 @@ Rectangle {
                         id:         planViewSectionLabel
                         text:       qsTr("Plan View")
                         visible:    _planViewSettings.visible
+                        color:      "#1b1a1d"
+                        font.bold:  true
                     }
                     Rectangle {
+                        id:                     _planCard
                         Layout.preferredHeight: planViewCol.height + (_margins * 2)
                         Layout.preferredWidth:  planViewCol.width + (_margins * 2)
-                        color:                  qgcPal.windowShade
+                        color:                  "white"//qgcPal.windowShade
+                        radius:                 10
                         visible:                planViewSectionLabel.visible
                         Layout.fillWidth:       true
 
@@ -634,6 +707,15 @@ Rectangle {
                                 visible:    _planViewSettings.takeoffItemNotRequired.visible
                             }
                         }
+
+                        layer.enabled:     true
+                        layer.effect: DropShadow {
+                            source: _planCard
+                            color: "#d6d4d4"
+                            transparentBorder: true
+                            spread:  0.3
+                            samples: 15
+                        }
                     }
 
                     Item { width: 1; height: _margins }
@@ -642,11 +724,15 @@ Rectangle {
                         id:         autoConnectSectionLabel
                         text:       qsTr("AutoConnect to the following devices")
                         visible:    QGroundControl.settingsManager.autoConnectSettings.visible
+                        color:      "#1b1a1d"
+                        font.bold:  true
                     }
                     Rectangle {
+                        id:                     _autoconnectCard
                         Layout.preferredWidth:  autoConnectCol.width + (_margins * 2)
                         Layout.preferredHeight: autoConnectCol.height + (_margins * 2)
-                        color:                  qgcPal.windowShade
+                        color:                  "white"//qgcPal.windowShade
+                        radius:                 10
                         visible:                autoConnectSectionLabel.visible
                         Layout.fillWidth:       true
 
@@ -750,6 +836,15 @@ Rectangle {
                                 }
                             }
                         }
+
+                        layer.enabled:     true
+                        layer.effect: DropShadow {
+                            source: _autoconnectCard
+                            color: "#d6d4d4"
+                            transparentBorder: true
+                            spread:  0.3
+                            samples: 15
+                        }
                     }
 
                     Item { width: 1; height: _margins }
@@ -758,11 +853,15 @@ Rectangle {
                         id:         rtkSectionLabel
                         text:       qsTr("RTK GPS")
                         visible:    QGroundControl.settingsManager.rtkSettings.visible
+                        color:      "#1b1a1d"
+                        font.bold:  true
                     }
                     Rectangle {
+                        id:                     _rtkCard
                         Layout.preferredHeight: rtkGrid.height + (_margins * 2)
                         Layout.preferredWidth:  rtkGrid.width + (_margins * 2)
-                        color:                  qgcPal.windowShade
+                        color:                  "white"//qgcPal.windowShade
+                        radius:                 10
                         visible:                rtkSectionLabel.visible
                         Layout.fillWidth:       true
 
@@ -885,6 +984,15 @@ Rectangle {
                                 }
                             }
                         }
+
+                        layer.enabled:     true
+                        layer.effect: DropShadow {
+                            source: _rtkCard
+                            color: "#d6d4d4"
+                            transparentBorder: true
+                            spread:  0.3
+                            samples: 15
+                        }
                     }
 
                     Item { width: 1; height: _margins }
@@ -893,11 +1001,15 @@ Rectangle {
                         id:         adsbSectionLabel
                         text:       qsTr("ADSB Server")
                         visible:    QGroundControl.settingsManager.adsbVehicleManagerSettings.visible
+                        color:      "#1b1a1d"
+                        font.bold:  true
                     }
                     Rectangle {
+                        id:                     _adsbCard
                         Layout.preferredHeight: adsbGrid.y + adsbGrid.height + _margins
                         Layout.preferredWidth:  adsbGrid.width + (_margins * 2)
-                        color:                  qgcPal.windowShade
+                        color:                  "white"//qgcPal.windowShade
+                        radius:                 10
                         visible:                adsbSectionLabel.visible
                         Layout.fillWidth:       true
 
@@ -949,6 +1061,15 @@ Rectangle {
                                 Layout.preferredWidth:  _valueFieldWidth
                             }
                         }
+
+                        layer.enabled:     true
+                        layer.effect: DropShadow {
+                            source: _adsbCard
+                            color: "#d6d4d4"
+                            transparentBorder: true
+                            spread:  0.3
+                            samples: 15
+                        }
                     }
 
                     Item { width: 1; height: _margins }
@@ -957,12 +1078,16 @@ Rectangle {
                         id:         videoSectionLabel
                         text:       qsTr("Video")
                         visible:    QGroundControl.settingsManager.videoSettings.visible && !QGroundControl.videoManager.autoStreamConfigured
+                        color:      "#1b1a1d"
+                        font.bold:  true
                     }
                     Rectangle {
+                        id:                     _videoCard
                         Layout.preferredWidth:  videoGrid.width + (_margins * 2)
                         Layout.preferredHeight: videoGrid.height + (_margins * 2)
                         Layout.fillWidth:       true
-                        color:                  qgcPal.windowShade
+                        color:                  "white"//qgcPal.windowShade
+                        radius:                 10
                         visible:                videoSectionLabel.visible
 
                         GridLayout {
@@ -1044,6 +1169,15 @@ Rectangle {
                                 visible:                _isGst && QGroundControl.settingsManager.videoSettings.lowLatencyMode.visible
                             }
                         }
+
+                        layer.enabled:     true
+                        layer.effect: DropShadow {
+                            source: _videoCard
+                            color: "#d6d4d4"
+                            transparentBorder: true
+                            spread:  0.3
+                            samples: 15
+                        }
                     }
 
                     Item { width: 1; height: _margins }
@@ -1054,10 +1188,12 @@ Rectangle {
                         visible:                        (QGroundControl.settingsManager.videoSettings.visible && _isGst) || QGroundControl.videoManager.autoStreamConfigured
                     }
                     Rectangle {
+                        id:                             _recordingCard
                         Layout.preferredWidth:          videoRecCol.width  + (_margins * 2)
                         Layout.preferredHeight:         videoRecCol.height + (_margins * 2)
                         Layout.fillWidth:               true
-                        color:                          qgcPal.windowShade
+                        color:                          "white"//qgcPal.windowShade
+                        radius:                         10
                         visible:                        videoRecSectionLabel.visible
 
                         GridLayout {
@@ -1098,6 +1234,15 @@ Rectangle {
                                 visible:                QGroundControl.settingsManager.videoSettings.recordingFormat.visible
                             }
                         }
+
+                        layer.enabled:     true
+                        layer.effect: DropShadow {
+                            source: _recordingCard
+                            color: "#d6d4d4"
+                            transparentBorder: true
+                            spread:  0.3
+                            samples: 15
+                        }
                     }
 
                     Item { width: 1; height: _margins; visible: videoRecSectionLabel.visible }
@@ -1106,12 +1251,16 @@ Rectangle {
                         id:         brandImageSectionLabel
                         text:       qsTr("Brand Image")
                         visible:    QGroundControl.settingsManager.brandImageSettings.visible && !ScreenTools.isMobile
+                        color:      "#1b1a1d"
+                        font.bold:  true
                     }
                     Rectangle {
+                        id:                     _brandCard
                         Layout.preferredWidth:  brandImageGrid.width + (_margins * 2)
                         Layout.preferredHeight: brandImageGrid.height + (_margins * 2)
                         Layout.fillWidth:       true
-                        color:                  qgcPal.windowShade
+                        color:                  "white"//qgcPal.windowShade
+                        radius:                 10
                         visible:                brandImageSectionLabel.visible
 
                         GridLayout {
@@ -1175,18 +1324,27 @@ Rectangle {
                                 }
                             }
                         }
+
+                        layer.enabled:     true
+                        layer.effect: DropShadow {
+                            source: _brandCard
+                            color: "#d6d4d4"
+                            transparentBorder: true
+                            spread:  0.3
+                            samples: 15
+                        }
                     }
 
                     Item { width: 1; height: _margins }
 
-                    QGCLabel {
-                        text:               qsTr("%1 Version").arg(QGroundControl.appName)
-                        Layout.alignment:   Qt.AlignHCenter
-                    }
-                    QGCLabel {
-                        text:               QGroundControl.qgcVersion
-                        Layout.alignment:   Qt.AlignHCenter
-                    }
+                    // QGCLabel {
+                    //     text:               qsTr("%1 Version").arg(QGroundControl.appName)
+                    //     Layout.alignment:   Qt.AlignHCenter
+                    // }
+                    // QGCLabel {
+                    //     text:               QGroundControl.qgcVersion
+                    //     Layout.alignment:   Qt.AlignHCenter
+                    // }
                 } // settingsColumn
             }
     }

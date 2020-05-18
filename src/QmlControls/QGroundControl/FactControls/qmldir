@@ -1,5 +1,6 @@
 Module QGroundControl.FactControls
 
+CustomFactComboBox      1.0 CustomFactComboBox.qml
 AltitudeFactTextField   1.0 AltitudeFactTextField.qml
 FactBitmask             1.0 FactBitmask.qml
 FactCheckBox            1.0 FactCheckBox.qml

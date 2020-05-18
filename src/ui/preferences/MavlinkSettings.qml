@@ -13,6 +13,7 @@ import QtQuick.Controls         1.2
 import QtQuick.Controls.Styles  1.4
 import QtQuick.Dialogs          1.2
 import QtQuick.Layouts          1.2
+import QtGraphicalEffects       1.14
 
 import QGroundControl                       1.0
 import QGroundControl.FactSystem            1.0
@@ -110,9 +111,11 @@ Rectangle {
                 }
             }
             Rectangle {
+                id:             _stationCard
                 height:         gcsColumn.height + (ScreenTools.defaultFontPixelHeight * 2)
                 width:          __mavlinkRoot.width * 0.8
                 color:          qgcPal.windowShade
+                radius:         10
                 anchors.margins: ScreenTools.defaultFontPixelWidth
                 anchors.horizontalCenter: parent.horizontalCenter
                 Column {
@@ -154,6 +157,15 @@ Rectangle {
                         }
                     }
                 }
+  
+                layer.enabled:     true
+                layer.effect: DropShadow {
+                    source: _stationCard
+                    color: "#d6d4d4"
+                    transparentBorder: true
+                    spread:  0.3
+                    samples: 15
+                }
             }
             //-----------------------------------------------------------------
             //-- Stream Rates
@@ -171,9 +183,11 @@ Rectangle {
                 }
             }
             Rectangle {
+                id:                         _telemetryCard
                 height:                     streamRatesColumn.height + (ScreenTools.defaultFontPixelHeight * 2)
                 width:                      __mavlinkRoot.width * 0.8
                 color:                      qgcPal.windowShade
+                radius:                     10
                 anchors.margins:            ScreenTools.defaultFontPixelWidth
                 anchors.horizontalCenter:   parent.horizontalCenter
                 visible:                    _showAPMStreamRates
@@ -245,6 +259,15 @@ Rectangle {
                         }
                     }
                 }
+  
+                layer.enabled:     true
+                layer.effect: DropShadow {
+                    source: _telemetryCard
+                    color: "#d6d4d4"
+                    transparentBorder: true
+                    spread:  0.3
+                    samples: 15
+                }
             }
             //-----------------------------------------------------------------
             //-- Mavlink Status
@@ -260,9 +283,11 @@ Rectangle {
                 }
             }
             Rectangle {
+                id:             _linkStatusCard
                 height:         mavStatusColumn.height + (ScreenTools.defaultFontPixelHeight * 2)
                 width:          __mavlinkRoot.width * 0.8
                 color:          qgcPal.windowShade
+                radius:         10
                 anchors.margins: ScreenTools.defaultFontPixelWidth
                 anchors.horizontalCenter: parent.horizontalCenter
                 Column {
@@ -331,6 +356,15 @@ Rectangle {
                         }
                     }
                 }
+  
+                layer.enabled:     true
+                layer.effect: DropShadow {
+                    source: _linkStatusCard
+                    color: "#d6d4d4"
+                    transparentBorder: true
+                    spread:  0.3
+                    samples: 15
+                }
             }
             //-----------------------------------------------------------------
             //-- Mavlink Logging
@@ -347,9 +381,11 @@ Rectangle {
                 }
             }
             Rectangle {
+                id:             _logging
                 height:         mavlogColumn.height + (ScreenTools.defaultFontPixelHeight * 2)
                 width:          __mavlinkRoot.width * 0.8
                 color:          qgcPal.windowShade
+                radius:         10
                 anchors.margins: ScreenTools.defaultFontPixelWidth
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible:        _showMavlinkLog
@@ -394,6 +430,15 @@ Rectangle {
                         }
                     }
                 }
+  
+                layer.enabled:     true
+                layer.effect: DropShadow {
+                    source: _logging
+                    color: "#d6d4d4"
+                    transparentBorder: true
+                    spread:  0.3
+                    samples: 15
+                }
             }
             //-----------------------------------------------------------------
             //-- Mavlink Logging
@@ -410,9 +455,11 @@ Rectangle {
                 }
             }
             Rectangle {
+                id:             _uploadCard
                 height:         logColumn.height + (ScreenTools.defaultFontPixelHeight * 2)
                 width:          __mavlinkRoot.width * 0.8
                 color:          qgcPal.windowShade
+                radius:         10
                 anchors.margins: ScreenTools.defaultFontPixelWidth
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible:        _showMavlinkLog
@@ -633,6 +680,16 @@ Rectangle {
                         }
                     }
                 }
+
+  
+                layer.enabled:     true
+                layer.effect: DropShadow {
+                    source: _uploadCard
+                    color: "#d6d4d4"
+                    transparentBorder: true
+                    spread:  0.3
+                    samples: 15
+                }
             }
             //-----------------------------------------------------------------
             //-- Log Files
@@ -649,9 +706,11 @@ Rectangle {
                 }
             }
             Rectangle {
+                id:             _logFileCard
                 height:         logFilesColumn.height + (ScreenTools.defaultFontPixelHeight * 2)
                 width:          __mavlinkRoot.width * 0.8
                 color:          qgcPal.windowShade
+                radius:         10
                 anchors.margins: ScreenTools.defaultFontPixelWidth
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible:        _showMavlinkLog
@@ -806,6 +865,15 @@ Rectangle {
                             }
                         }
                     }
+                }
+  
+                layer.enabled:     true
+                layer.effect: DropShadow {
+                    source: _logFileCard
+                    color: "#d6d4d4"
+                    transparentBorder: true
+                    spread:  0.3
+                    samples: 15
                 }
             }
         }

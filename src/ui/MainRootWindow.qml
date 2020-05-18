@@ -52,7 +52,7 @@ ApplicationWindow {
 
     readonly property real      _topBottomMargins:          ScreenTools.defaultFontPixelHeight * 0.5
     readonly property string    _mainToolbar:               QGroundControl.corePlugin.options.mainToolbarUrl
-    readonly property string    _planToolbar:               QGroundControl.corePlugin.options.planToolbarUrl
+    readonly property string    _planToolbar:               QGroundControl.corePlugin.options.mainToolbarUrl//QGroundControl.corePlugin.options.planToolbarUrl
 
     //-------------------------------------------------------------------------
     //-- Global Scope Variables
@@ -113,11 +113,18 @@ ApplicationWindow {
         analyzeWindow.visible   = false
         flightView.visible      = false
         planViewLoader.visible  = false
+        subMenuWindow.visible  = false
         if(isPlanView) {
             toolbar.source  = _planToolbar
         } else {
             toolbar.source  = _mainToolbar
         }
+    }
+
+    function showSubMenu(src) {
+        viewSwitch(false)
+        subMenuWindow.source = src
+        subMenuWindow.visible = true
     }
 
     function showFlyView() {
@@ -322,10 +329,10 @@ ApplicationWindow {
     //-------------------------------------------------------------------------
     /// Toolbar
     header: ToolBar {
-        height:         ScreenTools.toolbarHeight
+        height:         ScreenTools.toolbarHeight * 0.75
         visible:        !QGroundControl.videoManager.fullScreen
         background:     Rectangle {
-            color:      qgcPal.globalTheme === QGCPalette.Light ? QGroundControl.corePlugin.options.toolbarBackgroundLight : QGroundControl.corePlugin.options.toolbarBackgroundDark
+            color:      "white"//qgcPal.globalTheme === QGCPalette.Light ? QGroundControl.corePlugin.options.toolbarBackgroundLight : QGroundControl.corePlugin.options.toolbarBackgroundDark
         }
         Loader {
             id:             toolbar
@@ -391,6 +398,12 @@ ApplicationWindow {
         anchors.fill:   parent
         visible:        false
         source:         "AnalyzeView.qml"
+    }
+
+    Loader {
+        id:            subMenuWindow
+        anchors.fill:  parent
+        visible:       false
     }
 
     //-------------------------------------------------------------------------

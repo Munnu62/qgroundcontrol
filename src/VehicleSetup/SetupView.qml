@@ -188,6 +188,15 @@ Rectangle {
         }
     }
 
+    Rectangle {
+        id:                     drawerSpace
+        anchors.left:           parent.left
+        anchors.top:            parent.top
+        anchors.bottom:         parent.bottom
+        width:                  ScreenTools.defaultFontPixelWidth * 30
+        color:                  qgcPal.window
+    }
+
     QGCFlickable {
         id:                 buttonScroll
         width:              buttonColumn.width
@@ -195,7 +204,7 @@ Rectangle {
         anchors.top:        parent.top
         anchors.bottom:     parent.bottom
         anchors.leftMargin: _horizontalMargin
-        anchors.left:       parent.left
+        anchors.left:       drawerSpace.right
         contentHeight:      buttonColumn.height
         flickableDirection: Flickable.VerticalFlick
         clip:               true

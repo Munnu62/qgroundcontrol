@@ -10,7 +10,8 @@ add_custom_target(FactControlsQml
     FactTextField.qml     
     FactTextFieldSlider.qml
     FactBitmask.qml            
-    FactComboBox.qml  
+    FactComboBox.qml
+    CustomFactComboBox.qml    
     FactTextFieldGrid.qml  
     FactTextFieldRow.qml  
     FactValueSlider.qml

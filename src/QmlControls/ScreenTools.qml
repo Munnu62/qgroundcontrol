@@ -50,12 +50,14 @@ Item {
     property real defaultDialogControlSpacing: defaultFontPixelHeight / 2
 
     property real smallFontPointSize:       10
+    property real mediumSmallFontPointSize: 10
     property real mediumFontPointSize:      10
     property real largeFontPointSize:       10
 
     property real toolbarHeight:            0
 
     readonly property real smallFontPointRatio:      0.75
+    readonly property real mediumSmallFontPointRatio:  1.0
     readonly property real mediumFontPointRatio:     1.25
     readonly property real largeFontPointRatio:      1.5
 
@@ -143,6 +145,7 @@ Item {
         defaultFontDescent      = ScreenToolsController.defaultFontDescent(defaultFontPointSize)
         smallFontPointSize      = defaultFontPointSize  * _screenTools.smallFontPointRatio
         mediumFontPointSize     = defaultFontPointSize  * _screenTools.mediumFontPointRatio
+        mediumSmallFontPointSize = defaultFontPointSize  * _screenTools.mediumSmallFontPointRatio
         largeFontPointSize      = defaultFontPointSize  * _screenTools.largeFontPointRatio
         minTouchPixels          = Math.round(minTouchMillimeters * realPixelDensity)
         if (minTouchPixels / Screen.height > 0.15) {

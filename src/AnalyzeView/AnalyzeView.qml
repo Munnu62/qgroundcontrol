@@ -12,9 +12,10 @@
 ///     @brief Setup View
 ///     @author Don Gagne <don@thegagnes.com>
 
-import QtQuick          2.3
+import QtQuick          2.6
 import QtQuick.Window   2.2
 import QtQuick.Controls 1.2
+import QtGraphicalEffects       1.14
 
 import QGroundControl               1.0
 import QGroundControl.Palette       1.0
@@ -45,90 +46,121 @@ Rectangle {
         id: logController
     }
 
+    Rectangle {
+        id:                     drawerSpace
+        anchors.left:           parent.left
+        anchors.top:            parent.top
+        anchors.bottom:         parent.bottom
+        width:                  ScreenTools.defaultFontPixelWidth * 30
+        color:                  qgcPal.window
+    }
+
     QGCFlickable {
         id:                 buttonScroll
-        width:              buttonColumn.width
+        width:              subMenuContainer.width + _horizontalMargin*1.5
         anchors.topMargin:  _defaultTextHeight / 2
         anchors.top:        parent.top
         anchors.bottom:     parent.bottom
         anchors.leftMargin: _horizontalMargin
-        anchors.left:       parent.left
+        anchors.left:       drawerSpace.right
         contentHeight:      buttonColumn.height
         flickableDirection: Flickable.VerticalFlick
         clip:               true
 
-        Column {
-            id:         buttonColumn
-            width:      _maxButtonWidth
-            spacing:    _defaultTextHeight / 2
+        Rectangle {
+            id:       subMenuContainer
+            width:    buttonColumn.width + 2* _horizontalMargin
+            height:   buttonColumn.height + _verticalMargin
+            anchors.horizontalCenter:  parent.horizontalCenter
+            anchors.topMargin: _verticalMargin
+            anchors.bottom:    _verticalMargin
+            radius:   10
 
-            property real _maxButtonWidth: 0
-
-            Component.onCompleted: reflowWidths()
-
-            // I don't know why this does not work
-            Connections {
-                target:         QGroundControl.settingsManager.appSettings.appFontPointSize
-                onValueChanged: buttonColumn.reflowWidths()
-            }
-
-            function reflowWidths() {
-                buttonColumn._maxButtonWidth = 0
-                for (var i = 0; i < children.length; i++) {
-                    buttonColumn._maxButtonWidth = Math.max(buttonColumn._maxButtonWidth, children[i].width)
-                }
-                for (var j = 0; j < children.length; j++) {
-                    children[j].width = buttonColumn._maxButtonWidth
-                }
-            }
-
-            QGCLabel {
-                anchors.left:           parent.left
-                anchors.right:          parent.right
-                text:                   qsTr("Analyze")
-                wrapMode:               Text.WordWrap
-                horizontalAlignment:    Text.AlignHCenter
-                visible:                !ScreenTools.isShortScreen
-            }
-
-            Repeater {
-                id:                     buttonRepeater
-                model:                  QGroundControl.corePlugin ? QGroundControl.corePlugin.analyzePages : []
-                Component.onCompleted:  itemAt(0).checked = true
-                SubMenuButton {
-                    id:                 subMenu
-                    imageResource:      modelData.icon
-                    setupIndicator:     false
-                    exclusiveGroup:     setupButtonGroup
-                    text:               modelData.title
-                    property var window:    analyzeWidgetWindow
-                    property var loader:    analyzeWidgetLoader
-                    onClicked: {
-                        _curIndex = index
-                        panelLoader.source = modelData.url
-                        checked = true
-                    }
-                    Window {
-                        id:             analyzeWidgetWindow
-                        width:          ScreenTools.defaultFontPixelWidth  * 100
-                        height:         ScreenTools.defaultFontPixelHeight * 40
-                        visible:        false
-                        title:          modelData.title
-                        Rectangle {
-                            color:      qgcPal.window
-                            anchors.fill:  parent
-                            Loader {
-                                id:             analyzeWidgetLoader
-                                anchors.fill:   parent
-                            }
+            layer.enabled:  true
+            layer.effect:  DropShadow {
+                            source: subMenuContainer
+                            color: "#d6d4d4"
+                            transparentBorder: true
+                            spread:  0.3
+                            samples: 15
                         }
-                        onClosing: {
-                            analyzeWidgetWindow.visible = false
-                            analyzeWidgetLoader.source = ""
+
+            Column {
+                id:         buttonColumn
+                width:      _maxButtonWidth
+                spacing:    _defaultTextHeight / 2
+                leftPadding:  _horizontalMargin
+                rightPadding: _horizontalMargin
+                topPadding:   _verticalMargin
+
+                property real _maxButtonWidth: 0
+
+                Component.onCompleted: reflowWidths()
+
+                // I don't know why this does not work
+                Connections {
+                    target:         QGroundControl.settingsManager.appSettings.appFontPointSize
+                    onValueChanged: buttonColumn.reflowWidths()
+                }
+
+                function reflowWidths() {
+                    buttonColumn._maxButtonWidth = 0
+                    for (var i = 0; i < children.length; i++) {
+                        buttonColumn._maxButtonWidth = Math.max(buttonColumn._maxButtonWidth, children[i].width)
+                    }
+                    for (var j = 0; j < children.length; j++) {
+                        children[j].width = buttonColumn._maxButtonWidth
+                    }
+                }
+
+                QGCLabel {
+                    anchors.horizontalCenter:  parent
+                    anchors.topMargin:      _verticalMargin * 3
+                    text:                   qsTr("Analyze")
+                    wrapMode:               Text.WordWrap
+                    horizontalAlignment:    Text.AlignHCenter
+                    visible:                !ScreenTools.isShortScreen
+                }
+
+                Repeater {
+                    id:                     buttonRepeater
+                    model:                  QGroundControl.corePlugin ? QGroundControl.corePlugin.analyzePages : []
+                    Component.onCompleted:  itemAt(0).checked = true
+                    SubMenuButton {
+                        id:                 subMenu
+                        imageResource:      modelData.icon
+                        setupIndicator:     false
+                        exclusiveGroup:     setupButtonGroup
+                        text:               modelData.title
+                        property var window:    analyzeWidgetWindow
+                        property var loader:    analyzeWidgetLoader
+                        onClicked: {
                             _curIndex = index
                             panelLoader.source = modelData.url
-                            subMenu.visible = true
-                            subMenu.checked = true
+                            checked = true
+                        }
+                        Window {
+                            id:             analyzeWidgetWindow
+                            width:          ScreenTools.defaultFontPixelWidth  * 100
+                            height:         ScreenTools.defaultFontPixelHeight * 40
+                            visible:        false
+                            title:          modelData.title
+                            Rectangle {
+                                color:      qgcPal.window
+                                anchors.fill:  parent
+                                Loader {
+                                    id:             analyzeWidgetLoader
+                                    anchors.fill:   parent
+                                }
+                            }
+                            onClosing: {
+                                analyzeWidgetWindow.visible = false
+                                analyzeWidgetLoader.source = ""
+                                _curIndex = index
+                                panelLoader.source = modelData.url
+                                subMenu.visible = true
+                                subMenu.checked = true
+                            }
                         }
                     }
                 }

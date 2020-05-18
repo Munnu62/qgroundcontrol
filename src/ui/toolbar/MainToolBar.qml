@@ -11,6 +11,7 @@ import QtQuick          2.11
 import QtQuick.Controls 2.4
 import QtQuick.Layouts  1.11
 import QtQuick.Dialogs  1.3
+import QtGraphicalEffects 1.14
 
 import QGroundControl                       1.0
 import QGroundControl.Controls              1.0
@@ -80,61 +81,63 @@ Item {
                     }
                 }
 
+                // QGCToolBarButton {
+                //     id:                 settingsButton
+                //     Layout.fillHeight:  true
+                //     icon.source:        "/res/QGCLogoWhite"
+                //     logo:               true
+                //     visible:            !QGroundControl.corePlugin.options.combineSettingsAndSetup
+                //     onClicked: {
+                //         if (mainWindow.preventViewSwitch()) {
+                //             return
+                //         }
+                //         buttonRow.clearAllChecks()
+                //         checked = true
+                //         mainWindow.showSettingsView()
+                //     }
+                // }
+
+                // QGCToolBarButton {
+                //     id:                 setupButton
+                //     Layout.fillHeight:  true
+                //     icon.source:        "/qmlimages/Gears.svg"
+                //     onClicked: {
+                //         if (mainWindow.preventViewSwitch()) {
+                //             return
+                //         }
+                //         buttonRow.clearAllChecks()
+                //         checked = true
+                //         mainWindow.showSetupView()
+                //     }
+                // }
+
+                // QGCToolBarButton {
+                //     id:                 planButton
+                //     Layout.fillHeight:  true
+                //     icon.source:        "/qmlimages/Plan.svg"
+                //     onClicked: {
+                //         if (mainWindow.preventViewSwitch()) {
+                //             return
+                //         }
+                //         buttonRow.clearAllChecks()
+                //         checked = true
+                //         mainWindow.showPlanView()
+                //     }
+                // }
+
                 QGCToolBarButton {
-                    id:                 settingsButton
+                    id:                 iconButton
                     Layout.fillHeight:  true
-                    icon.source:        "/res/QGCLogoWhite"
+                    icon.source:        "/res/VyoriusLogo"
                     logo:               true
-                    visible:            !QGroundControl.corePlugin.options.combineSettingsAndSetup
                     onClicked: {
-                        if (mainWindow.preventViewSwitch()) {
-                            return
-                        }
-                        buttonRow.clearAllChecks()
-                        checked = true
-                        mainWindow.showSettingsView()
-                    }
-                }
-
-                QGCToolBarButton {
-                    id:                 setupButton
-                    Layout.fillHeight:  true
-                    icon.source:        "/qmlimages/Gears.svg"
-                    onClicked: {
-                        if (mainWindow.preventViewSwitch()) {
-                            return
-                        }
-                        buttonRow.clearAllChecks()
-                        checked = true
-                        mainWindow.showSetupView()
-                    }
-                }
-
-                QGCToolBarButton {
-                    id:                 planButton
-                    Layout.fillHeight:  true
-                    icon.source:        "/qmlimages/Plan.svg"
-                    onClicked: {
-                        if (mainWindow.preventViewSwitch()) {
-                            return
-                        }
-                        buttonRow.clearAllChecks()
-                        checked = true
-                        mainWindow.showPlanView()
-                    }
-                }
-
-                QGCToolBarButton {
-                    id:                 flyButton
-                    Layout.fillHeight:  true
-                    icon.source:        "/qmlimages/PaperPlane.svg"
-                    onClicked: {
-                        if (mainWindow.preventViewSwitch()) {
-                            return
-                        }
-                        buttonRow.clearAllChecks()
-                        checked = true
-                        mainWindow.showFlyView()
+                        // if (mainWindow.preventViewSwitch()) {
+                        //     return
+                        // }
+                        // buttonRow.clearAllChecks()
+                        // checked = true
+                        // mainWindow.showFlyView()
+                        drawer.visible = !drawer.visible
 
                         // Easter Egg mechanism
                         _clickCount++
@@ -171,20 +174,20 @@ Item {
                     }
                 }
 
-                QGCToolBarButton {
-                    id:                 analyzeButton
-                    Layout.fillHeight:  true
-                    icon.source:        "/qmlimages/Analyze.svg"
-                    visible:            QGroundControl.corePlugin.showAdvancedUI
-                    onClicked: {
-                        if (mainWindow.preventViewSwitch()) {
-                            return
-                        }
-                        buttonRow.clearAllChecks()
-                        checked = true
-                        mainWindow.showAnalyzeView()
-                    }
-                }
+                // QGCToolBarButton {
+                //     id:                 analyzeButton
+                //     Layout.fillHeight:  true
+                //     icon.source:        "/qmlimages/Analyze.svg"
+                //     visible:            QGroundControl.corePlugin.showAdvancedUI
+                //     onClicked: {
+                //         if (mainWindow.preventViewSwitch()) {
+                //             return
+                //         }
+                //         buttonRow.clearAllChecks()
+                //         checked = true
+                //         mainWindow.showAnalyzeView()
+                //     }
+                // }
 
                 Item {
                     Layout.fillHeight:  true
@@ -315,8 +318,8 @@ Item {
         anchors.rightMargin:    ScreenTools.defaultFontPixelWidth
         anchors.right:          parent.right
         anchors.verticalCenter: parent.verticalCenter
-        text:                   qsTr("Waiting For Vehicle Connection")
-        font.pointSize:         ScreenTools.mediumFontPointSize
+        text:                   qsTr("Waiting For Vehicle Connection     ")
+        font.pointSize:         ScreenTools.mediumSmallFontPointSize
         font.family:            ScreenTools.demiboldFontFamily
         color:                  qgcPal.colorRed
         visible:                !activeVehicle
@@ -350,5 +353,233 @@ Item {
             color:                  qgcPal.colorRed
         }
     }
+
+    //-------------------------------------------------------------------------
+    //-- Drawer 
+    Drawer {
+        id:                                 drawer
+        y:                                  header.height
+        width:                              ScreenTools.defaultFontPixelWidth * 30
+        height:                             mainWindow.height - header.height
+        closePolicy:                        Popup.CloseOnEscape | Popup.CloseOnPressOutside
+        dim:                                false
+        background: Rectangle {
+            color:                          "white"//qgcPal.window
+        }
+        property var curMenu: null
+        property var curSubMenu: null
+
+        Rectangle {
+            id:   _userprofile
+            width:  drawer.width
+            height: width * 0.7
+            z:      listing.z + 1
+            anchors.top: drawer.top
+            anchors.horizontalCenter: drawer.horizontalCenter
+            // color:  "blue"
+
+            Image {
+                id:  _userImage
+                source: "/res/UserProfile"
+                width: parent.width * 0.4
+                height: width
+                fillMode: Image.PreserveAspectCrop
+                layer.enabled: true
+                layer.effect: OpacityMask {
+                    maskSource: _circularMask
+                }
+
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top:  parent.top
+                anchors.topMargin:  ScreenTools.defaultFontPixelWidth * 3
+            }
+
+            Rectangle {
+                id: _circularMask
+                width: _userImage.width
+                height: width
+                radius: width * 0.7
+                border.color: "black"
+                border.width: 1
+                visible: false
+
+            }
+
+            Label {
+                text: "User Name"
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top:  _userImage.bottom
+                anchors.topMargin: ScreenTools.defaultFontPixelWidth * 1.5
+                color: "#1b1a1d"
+            }
+        }
+
+        ListView {
+            id: listing
+
+            width: drawer.width
+            height: parent.height - _userprofile.height
+            anchors.top:  _userprofile.bottom
+            model: listModel
+            delegate: listdelegate
+
+        }
+
+    }
+
+    Component {
+        id: listdelegate
+
+        Column {
+            width: drawer.width
+
+            function getget(name) {
+                if(name === qsTr("Application Settings"))
+                    return QGroundControl.corePlugin.settingsPages;
+
+                return null;
+            }
+
+            function getgetget(name) {
+                if(name === qsTr("Fly"))
+                    return mainWindow.showFlyView;
+                if(name === qsTr("Plan"))
+                    return mainWindow.showPlanView;
+                if(name === qsTr("Settings"))
+                    return mainWindow.showSetupView;
+                if(name === qsTr("Analyze"))
+                    return mainWindow.showAnalyzeView;
+                return null;
+            }
+
+            property var subItems: getget(name)
+            property var clickAction: getgetget(name)
+            property var collapsed: true
+            property var prevDrawerSubMenu: null
+
+            CustomToolBarButton {
+                text:                       name
+                width: drawer.width
+                isrc:                src
+                Layout.fillWidth:           true
+                containsSubItem:     subItems != null
+                onClicked: {
+                    collapsed = !collapsed
+                    if(clickAction != null) 
+                        clickAction()
+                }
+            }
+
+            Loader {
+                id: subItemLoader
+
+                visible: !collapsed
+                property variant subItemModel: subItems
+                sourceComponent: collapsed ? null : subItemColumnDelegate
+                onStatusChanged: if (status == Loader.Ready) item.model = subItemModel
+            }
+
+        }
+
+    }
+
+    Component {
+        id: subItemColumnDelegate
+        Column {
+            property alias model: subItemRepeater.model
+            width: drawer.width
+            Repeater {
+                id: subItemRepeater
+                delegate: Column {
+
+                    property bool mouseHover: false
+                    
+                    Rectangle {
+                        id:                                 _subMenuItem
+                        height:                             ScreenTools.defaultFontPixelHeight * 1.5
+                        width:                              drawer.width
+                        property bool highlightedSubMenu:   false
+                        color:                              highlightedSubMenu ? "#f9f9fa" : "white"
+
+
+                        Rectangle {id: _dummy; width: ScreenTools.defaultFontPixelHeight * 2;}
+
+                        QGCColoredImage {
+                            id:    _dummyArrow
+                            height:                 ScreenTools.defaultFontPixelHeight * (mouseHover ? 0.7 : 0.5)
+                            width:                  height
+                            sourceSize.height:      parent.height
+                            fillMode:               Image.PreserveAspectFit
+                            color:                  "#1b1a1d"//qgcPal.buttonText
+                            source:                 "/qmlimages/MenuDown"
+                            anchors.verticalCenter: _textt.verticalCenter
+                            anchors.left:           _dummy.right    
+                            rotation:               -90
+                        }
+
+                        Text {
+                            id: _textt
+                            anchors.verticalCenter: parent.verticalCenter
+                            font.pointSize: mouseHover ? ScreenTools.mediumSmallFontPointSize * 1.1 : ScreenTools.mediumSmallFontPointSize
+                            font.bold:   _subMenuItem.highlightedSubMenu
+                            text: modelData.title
+                            anchors.left: _dummyArrow.right
+                            anchors.leftMargin:  ScreenTools.mediumSmallFontPointSize * 0.5
+                            color:      "#1b1a1d"
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            hoverEnabled: true
+
+                            onClicked: {_subMenuItem.highlightedSubMenu = true; mainWindow.showSubMenu(modelData.url)}
+                            onEntered: mouseHover = true
+                            onExited:  mouseHover = false
+                        }
+                    }
+
+
+                    Rectangle {
+                        height: ScreenTools.defaultFontPixelHeight * 0.05
+                        width: drawer.width * (mouseHover ? 0.8 : 0.7)
+                        color: "#ebebeb"
+                        anchors.horizontalCenter: _subMenuItem.horizontalCenter
+                    }
+                }
+            }
+        }
+    }
+
+    ListModel {
+        id: listModel
+
+        
+        ListElement {
+            name: qsTr("Application Settings")
+            src: "/qmlimages/Gears.svg"
+        }
+
+        ListElement {
+            name: qsTr("Fly")
+            src:  "/qmlimages/PaperPlane.svg"
+        }
+
+        ListElement {
+            name: qsTr("Plan")
+            src:  "/qmlimages/Plan.svg"
+        }
+
+        ListElement {
+            name: qsTr("Analyze")
+            src:  "/qmlimages/Analyze.svg"
+        }
+
+        ListElement {
+            name: qsTr("Settings")
+            src:  "/qmlimages/Gears.svg"
+        }
+
+    }
+
 
 }

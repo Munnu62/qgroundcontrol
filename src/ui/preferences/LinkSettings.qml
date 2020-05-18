@@ -153,6 +153,7 @@ Rectangle {
             color:          qgcPal.window
             anchors.fill:   parent
             property real   _panelWidth:    width * 0.8
+            radius:         10
             Component.onCompleted: {
                 // If editing, create copy for editing
                 if(linkConfig) {
@@ -220,6 +221,7 @@ Rectangle {
                         color:                      qgcPal.windowShade
                         anchors.margins:            ScreenTools.defaultFontPixelWidth
                         anchors.horizontalCenter:   parent.horizontalCenter
+                        radius:                     10
                         Column {
                             id:                     generalCol
                             anchors.centerIn:       parent
@@ -352,6 +354,7 @@ Rectangle {
                         color:                      qgcPal.windowShade
                         anchors.margins:            ScreenTools.defaultFontPixelWidth
                         anchors.horizontalCenter:   parent.horizontalCenter
+                        radius:                     10
                         Item {
                             height:                 linkSettingLoader.height
                             width:                  linkSettingLoader.width
