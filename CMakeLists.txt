@@ -32,18 +32,18 @@ message(STATUS "Build Type: ${CMAKE_BUILD_TYPE}")
 message(STATUS "Qt version: ${QT_VERSION}")
 message(STATUS "Qt spec: ${QT_MKSPEC}")
 
-set(COMPANY "Mavlink")
-set(COPYRIGHT "Copyright (c) 2018 QGroundControl. All rights reserved.")
-set(IDENTIFIER "io.mavlink.qgroundcontrol")
+set(COMPANY "Vyorius")
+set(COPYRIGHT "Copyright (c) 2018 Vyorius. All rights reserved.")
+set(IDENTIFIER "vyorius.com")
 
 add_definitions(
-	-DQGC_APPLICATION_NAME="QGroundControl"
-	-DQGC_ORG_NAME="QGroundControl.org"
-	-DQGC_ORG_DOMAIN="org.qgroundcontrol"
+	-DQGC_APPLICATION_NAME="Vyorius"
+	-DQGC_ORG_NAME="Vyorius"
+	-DQGC_ORG_DOMAIN="vyorius.com"
 	)
 
 include(Git)
-message(STATUS "QGroundControl version: ${GIT_VERSION}")
+message(STATUS "Vyorius version: ${GIT_VERSION}")
 
 #=============================================================================
 # ccache
